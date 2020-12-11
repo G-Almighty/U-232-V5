@@ -2664,7 +2664,7 @@ CREATE TABLE IF NOT EXISTS `userhits` (
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
-  `passhash` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `passhash` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `secret` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
   `passkey` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   `email` varchar(180) CHARACTER SET utf8 DEFAULT NULL,
@@ -2674,7 +2674,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_access` int(11) UNSIGNED NOT NULL DEFAULT '0',
   `curr_ann_last_check` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `curr_ann_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `editsecret` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `editsecret` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `privacy` enum('strong','normal','low') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'normal',
   `stylesheet` int(10) NOT NULL DEFAULT '1',
   `info` text CHARACTER SET utf8,
