@@ -275,7 +275,7 @@ INSERT INTO `avps` (`arg`, `value_s`, `value_i`, `value_u`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `bannedemails` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `added` int(11) NOT NULL DEFAULT '0',
   `addedby` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `comment` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -352,8 +352,8 @@ CREATE TABLE IF NOT EXISTS `bans` (
   `added` int(11) NOT NULL DEFAULT '0',
   `addedby` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `comment` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `first` bigint(11) DEFAULT NULL,
-  `last` bigint(11) DEFAULT NULL
+  `first` bigint(11) DEFAULT NULL DEFAULT '0',
+  `last` bigint(11) DEFAULT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -367,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `blackjack` (
   `points` int(11) NOT NULL DEFAULT '0',
   `status` enum('playing','waiting') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'playing',
   `cards` text CHARACTER SET utf8,
-  `date` int(11) NOT NULL DEFAULT '0',
+  `date` int(11) DEFAULT '0',
   `gameover` enum('yes','no') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -840,7 +840,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `anonymous` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
   `request` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `offer` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `edit_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `edit_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `user_likes` text CHARACTER SET utf8,
   `checked_by` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
   `checked_when` int(11) NOT NULL DEFAULT '0',
@@ -988,10 +988,10 @@ CREATE TABLE IF NOT EXISTS `dbbackup` (
 
 CREATE TABLE IF NOT EXISTS `deathrow` (
   `uid` int(10) NOT NULL,
-  `username` char(80) CHARACTER SET utf8 DEFAULT NULL,
+  `username` char(80) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `tid` int(10) NOT NULL DEFAULT '0',
-  `torrent_name` char(140) CHARACTER SET utf8 DEFAULT NULL,
-  `reason` tinyint(1) DEFAULT NULL,
+  `torrent_name` char(140) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `reason` tinyint(1) NOT NULL DEFAULT '0',
   `notify` tinyint(1) UNSIGNED NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1040,8 +1040,8 @@ CREATE TABLE IF NOT EXISTS `failedlogins` (
 CREATE TABLE IF NOT EXISTS `faq` (
   `id` int(3) NOT NULL,
   `type` int(3) NOT NULL DEFAULT '0',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `text` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1116,8 +1116,8 @@ INSERT INTO `faq` (`id`, `type`, `title`, `text`) VALUES
 
 CREATE TABLE IF NOT EXISTS `faq_cat` (
   `id` int(3) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `shortcut` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `shortcut` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `min_view` int(3) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1212,8 +1212,8 @@ INSERT INTO `freeleech` (`id`, `name`, `var`, `description`, `type`, `amount`) V
 --
 
 CREATE TABLE IF NOT EXISTS `freeslots` (
-  `torrentid` int(10) UNSIGNED DEFAULT NULL,
-  `userid` int(10) UNSIGNED DEFAULT NULL,
+  `torrentid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `userid` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `doubleup` enum('yes','no') CHARACTER SET utf8 NOT NULL DEFAULT 'no',
   `free` enum('yes','no') CHARACTER SET utf8 NOT NULL DEFAULT 'no',
   `addedup` int(11) NOT NULL DEFAULT '0',
@@ -1316,7 +1316,7 @@ INSERT INTO `hit_and_run_settings` (`name`, `value`) VALUES
 
 CREATE TABLE IF NOT EXISTS `infolog` (
   `id` int(10) UNSIGNED NOT NULL,
-  `added` int(11) DEFAULT '0',
+  `added` int(11) NOT NULL DEFAULT '0',
   `txt` text CHARACTER SET utf8
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1346,7 +1346,7 @@ CREATE TABLE IF NOT EXISTS `ips` (
   `id` int(10) UNSIGNED NOT NULL,
   `ip` varchar(60) CHARACTER SET utf8 DEFAULT NULL,
   `userid` int(10) DEFAULT NULL,
-  `type` enum('login','announce','browse','like') CHARACTER SET latin1 NOT NULL,
+  `type` enum('login','announce','browse','like') CHARACTER SET latin1 NOT NULL DEFAULT 'login',
   `seedbox` tinyint(1) NOT NULL DEFAULT '0',
   `lastbrowse` int(11) NOT NULL DEFAULT '0',
   `lastlogin` int(11) NOT NULL DEFAULT '0',
@@ -1407,8 +1407,8 @@ INSERT INTO `lottery_config` (`name`, `value`) VALUES
 
 CREATE TABLE IF NOT EXISTS `manage_likes` (
   `id` int(10) NOT NULL,
-  `user_id` int(10) DEFAULT NULL,
-  `disabled_time` int(10) DEFAULT NULL
+  `user_id` int(10) NOT NULL DEFAULT '0',
+  `disabled_time` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1444,7 +1444,7 @@ CREATE TABLE IF NOT EXISTS `modscredits` (
   `category` enum('Addon','Forum','Message/Email','Display/Style','Staff/Tools','Browse/Torrent/Details','Misc') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Misc',
   `status` enum('Complete','In-Progress') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Complete',
   `u232lnk` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `credit` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `credit` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `description` varchar(120) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1742,7 +1742,7 @@ CREATE TABLE IF NOT EXISTS `peers` (
   `id` int(10) UNSIGNED NOT NULL,
   `torrent` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `torrent_pass` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
-  `peer_id` binary(20) DEFAULT NULL,
+  `peer_id` binary(20) NOT NULL DEFAULT '',
   `ip` varchar(64) CHARACTER SET utf8 DEFAULT NULL,
   `port` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
@@ -1825,7 +1825,7 @@ CREATE TABLE IF NOT EXISTS `poll_voters` (
 --
 
 -- --------------------------------------------------------
---
+
 -- Table structure for table `postpollanswers`
 --
 
@@ -1883,10 +1883,10 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `body` longtext COLLATE utf8_bin,
   `edited_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `edit_date` int(11) NOT NULL DEFAULT '0',
-  `post_history` mediumtext COLLATE utf8_bin,
+  `post_history` mediumtext COLLATE utf8_bin NOT NULL DEFAULT '',
   `icon` int(2) NOT NULL DEFAULT '0',
   `anonymous` enum('yes','no') COLLATE utf8_bin NOT NULL DEFAULT 'no',
-  `user_likes` text CHARACTER SET utf8 NOT NULL
+  `user_likes` text CHARACTER SET utf8 NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -1968,6 +1968,7 @@ CREATE TABLE IF NOT EXISTS `releases` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `reports`
 --
@@ -2080,8 +2081,8 @@ CREATE TABLE IF NOT EXISTS `request_votes` (
 CREATE TABLE IF NOT EXISTS `rules` (
   `id` int(3) NOT NULL,
   `type` int(3) NOT NULL DEFAULT '0',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `text` text COLLATE utf8_unicode_ci NOT NULL
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `text` text COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2103,8 +2104,8 @@ INSERT INTO `rules` (`id`, `type`, `title`, `text`) VALUES
 
 CREATE TABLE IF NOT EXISTS `rules_cat` (
   `id` int(3) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `shortcut` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `shortcut` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `min_view` int(3) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -2233,7 +2234,7 @@ CREATE TABLE IF NOT EXISTS `snatched` (
   `port` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `connectable` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
   `agent` varchar(60) CHARACTER SET utf8 DEFAULT NULL,
-  `peer_id` binary(20) DEFAULT NULL,
+  `peer_id` binary(20) NOT NULL DEFAULT '',
   `uploaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `upspeed` bigint(20) NOT NULL DEFAULT '0',
   `downloaded` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
@@ -2526,7 +2527,7 @@ CREATE TABLE IF NOT EXISTS `topics` (
   `anonymous` enum('yes','no') COLLATE utf8_bin NOT NULL DEFAULT 'no',
   `num_ratings` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `rating_sum` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `user_likes` text CHARACTER SET utf8 NOT NULL
+  `user_likes` text CHARACTER SET utf8 NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -2537,7 +2538,7 @@ CREATE TABLE IF NOT EXISTS `topics` (
 
 CREATE TABLE IF NOT EXISTS `torrents` (
   `id` int(10) UNSIGNED NOT NULL,
-  `info_hash` binary(20) NOT NULL,
+  `info_hash` binary(20) NOT NULL DEFAULT '',
   `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `filename` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `save_as` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -2594,7 +2595,7 @@ CREATE TABLE IF NOT EXISTS `torrents` (
   `mtime` int(11) NOT NULL DEFAULT '0',
   `ctime` int(11) NOT NULL DEFAULT '0',
   `freetorrent` tinyint(4) NOT NULL DEFAULT '0',
-  `user_likes` text CHARACTER SET utf8
+  `user_likes` text CHARACTER SET utf8 NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2636,8 +2637,8 @@ CREATE TABLE IF NOT EXISTS `usercomments` (
   `ori_text` text CHARACTER SET utf8,
   `editedby` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `editedat` int(11) NOT NULL DEFAULT '0',
-  `edit_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `user_likes` text CHARACTER SET utf8
+  `edit_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `user_likes` text CHARACTER SET utf8 NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2749,7 +2750,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `invitees` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `invite_on` enum('yes','no') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'yes',
   `subscription_pm` enum('yes','no') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'no',
-  `gender` enum('Male','Female','NA') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'NA',
+  `gender` enum('Male','Female','N/A') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N/A',
   `anonymous_until` int(10) NOT NULL DEFAULT '0',
   `viewscloud` enum('yes','no') CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'yes',
   `tenpercent` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
@@ -2781,7 +2782,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `warn_reason` text CHARACTER SET utf8,
   `onirc` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
   `irctotal` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `birthday` date NOT NULL DEFAULT '1801-01-01',
+  `birthday` date NOT NULL DEFAULT '1920-01-01',
   `got_blocks` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'yes',
   `last_access_numb` bigint(30) NOT NULL DEFAULT '0',
   `onlinetime` bigint(30) NOT NULL DEFAULT '0',
@@ -2791,11 +2792,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `browser` text CHARACTER SET utf8,
   `hits` int(10) NOT NULL DEFAULT '0',
   `comments` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `categorie_icon` int(10) NOT NULL DEFAULT '1',
+  `categorie_icon` int(10) DEFAULT '1',
   `perms` int(11) NOT NULL DEFAULT '0',
   `mood` int(10) NOT NULL DEFAULT '1',
   `got_moods` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
-  `pms_per_page` tinyint(3) UNSIGNED DEFAULT '20',
+  `pms_per_page` tinyint(3) UNSIGNED NOT NULL DEFAULT '20',
   `show_pm_avatar` enum('yes','no') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'no',
   `watched_user` int(11) NOT NULL DEFAULT '0',
   `watched_user_reason` text CHARACTER SET utf8,
@@ -2910,8 +2911,8 @@ CREATE TABLE IF NOT EXISTS `wiki` (
   `body` longtext CHARACTER SET utf8,
   `userid` int(10) UNSIGNED DEFAULT '0',
   `time` int(11) NOT NULL DEFAULT '0',
-  `lastedit` int(10) unsigned DEFAULT NULL DEFAULT '0',
-  `lastedituser` int(10) unsigned DEFAULT NULL DEFAULT '0'
+  `lastedit` int(10) unsigned NOT NULL DEFAULT '0',
+  `lastedituser` int(10) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `wiki` (`id`, `name`, `body`, `userid`, `time`, `lastedit`, `lastedituser`) VALUES
@@ -2928,8 +2929,8 @@ CREATE TABLE IF NOT EXISTS `xbt_announce_log` (
   `ipa` int(10) unsigned NOT NULL DEFAULT '0',
   `port` int(11) NOT NULL DEFAULT '0',
   `event` int(11) NOT NULL DEFAULT '0',
-  `info_hash` blob,
-  `peer_id` blob,
+  `info_hash` blob NOT NULL DEFAULT '',
+  `peer_id` blob NOT NULL DEFAULT '',
   `downloaded` bigint(20) NOT NULL DEFAULT '0',
   `left0` bigint(20) NOT NULL DEFAULT '0',
   `uploaded` bigint(20) NOT NULL DEFAULT '0',
@@ -2994,7 +2995,7 @@ CREATE TABLE IF NOT EXISTS `xbt_deny_from_hosts` (
 
 CREATE TABLE IF NOT EXISTS `xbt_files` (
   `fid` int(11) NOT NULL,
-  `info_hash` blob NOT NULL,
+  `info_hash` blob NOT NULL DEFAULT '',
   `leechers` int(11) NOT NULL DEFAULT '0',
   `seeders` int(11) NOT NULL DEFAULT '0',
   `completed` int(11) NOT NULL DEFAULT '0',
@@ -3033,7 +3034,7 @@ CREATE TABLE IF NOT EXISTS `xbt_files_users` (
   `seedtime` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
   `upspeed` int(10) unsigned NOT NULL DEFAULT '0',
   `downspeed` int(10) unsigned NOT NULL DEFAULT '0',
-  `peer_id` char(8) COLLATE utf8_unicode_ci NOT NULL,
+  `peer_id` char(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `completedtime` int(11) unsigned NOT NULL DEFAULT '0',
   `ipa` int(11) unsigned NOT NULL DEFAULT '0',
   `connectable` tinyint(4) NOT NULL DEFAULT '1',
